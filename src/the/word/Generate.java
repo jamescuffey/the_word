@@ -15,6 +15,18 @@ import javax.swing.JTextField;
  * @author James
  */
 public class Generate extends JPanel {
+    
+    //set a temp variable for our coin
+    private static int tempCoin;
+       
+    //create an instance of the coin class
+    public static Coin singleton = new Coin(tempCoin); 
+    
+    //get the instance
+    public static Coin getSingleton() {
+        return singleton;
+    }
+ 
  
     /**
      * Our counter used for the timer.
@@ -32,6 +44,11 @@ public class Generate extends JPanel {
      * The label for generating new words.
      */
     public static Label label;
+    
+    /**
+     * The label for updating coins on the screen.
+     */
+    public static Label coins;
  
     /**
      * Initialise the random generator.
@@ -51,11 +68,12 @@ public class Generate extends JPanel {
     /**
      * Construct our new words.
      */
-    public Generate() {
+    public Generate() {  
         label = new Label("The new word is: " + generateWord());
-        JTextField word = new JTextField(10);
         time = new Label("You have : " + counter + " seconds left!");
+        coins = new Label("Total coins: " + getSingleton().getCoins());
         JButton button = new JButton("Confirm my choice");
+        JTextField word = new JTextField(10);
         
         //handles the logic for clicking the button
         button.addActionListener(new ActionListener() {
@@ -64,19 +82,22 @@ public class Generate extends JPanel {
             }
         });
         
-        time.setPreferredSize(new Dimension(420, 250));
+        //time.setPreferredSize(new Dimension(420, 150));
+        coins.setPreferredSize(new Dimension(180, 150));
         word.setLocation(0, 0);   
         label.setSize(10, 10);
         button.setLocation(0, 10);
-        time.setForeground(Color.red);    
-  
+        
+        time.setForeground(Color.red);   
+        coins.setForeground(Color.yellow); 
         label.setForeground(Color.white);
         
         //add the components to the JPanel
         add(label);
+        add(time);
+        add(coins);
         add(word);
         add(button);
-        add(time);
         
         //set its background to dark gray.
         setBackground(Color.DARK_GRAY);
@@ -87,11 +108,23 @@ public class Generate extends JPanel {
      * Handle the logic for the text field.
      * @param word 
      */
-    public void handleLogic(JTextField word) {
-        if(word.getText().contains(currentWord) && counter > 0) {
-            System.out.println("Your right!");
+    public void handleLogic(JTextField word) { 
+        if(word.getText().contains(currentWord) && counter > 0) {        
+            System.out.println("Your right!");           
+            tempCoin += 10;    
+            //increments the coin by 10
+            getSingleton().setCoins(tempCoin);
+            
+            //updates the coin text
+            coins.setText("Total coins: " + Generate.getSingleton().getCoins());  
         } else if(!word.getText().contains(currentWord)) {
             System.out.println("Wrong word!");
+            tempCoin -= 3;
+            //decrements the coin by 3
+            getSingleton().setCoins(tempCoin);
+            
+            //updates the coin text
+            coins.setText("Total coins: " + Generate.getSingleton().getCoins());  
         } else {
             System.out.println("Time has ran out!");
         }
@@ -120,6 +153,7 @@ public class Generate extends JPanel {
     
     public void reset() {
         //reset variables such as levels etc..
+        getSingleton().setCoins(0);
     }
    
 }

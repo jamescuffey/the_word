@@ -1,6 +1,8 @@
 package the.word;
 
+import java.awt.Label;
 import javax.swing.JFrame;
+import static the.word.Generate.coins;
 import static the.word.Generate.counter;
 import static the.word.Generate.generateWord;
 import static the.word.Generate.label;
@@ -65,7 +67,7 @@ public class Word extends JFrame implements Runnable {
             counter = 10;
             
             //ovveride the current label's text again
-            label.setText("The new word is: " + generateWord());
+            label.setText("The new word is: " + generateWord());       
         }
       }
     }
