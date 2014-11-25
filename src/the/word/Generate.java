@@ -132,6 +132,7 @@ public class Generate extends JPanel {
   
     /**
      * Generates a new word.
+     * @return result
      */
     public static String generateWord() {
         int randomWord = generator.nextInt(WORDS.length);
