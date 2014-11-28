@@ -1,4 +1,4 @@
-package the.word;
+package the.word.level;
 
 /**
  *

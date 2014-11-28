@@ -1,6 +1,7 @@
-package the.word.level;
+package the.word.level.impl;
 
 import the.word.Coin;
+import the.word.level.Level;
 
 /**
  *

@@ -1,8 +1,8 @@
 package the.word;
 
-import java.awt.Label;
 import javax.swing.JFrame;
-import static the.word.Generate.coins;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import static the.word.Generate.counter;
 import static the.word.Generate.generateWord;
 import static the.word.Generate.label;
@@ -17,7 +17,7 @@ public class Word extends JFrame implements Runnable {
     /**
      * Declare our height and width of the application.
      */
-    private final int HEIGHT = 500, WIDTH = 250;
+    private final int HEIGHT = 600, WIDTH = 250;
    
     /**
      * Construct a new Word.
@@ -32,7 +32,6 @@ public class Word extends JFrame implements Runnable {
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
- 
     }
     
     /**
@@ -40,7 +39,18 @@ public class Word extends JFrame implements Runnable {
      * @param args 
      */
     public static void main(String[] args) {
-        new Word().run();
+        try {
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+        }
+        
+        new Word().run();   
     }
 
     /**
@@ -67,7 +77,8 @@ public class Word extends JFrame implements Runnable {
             counter = 10;
             
             //ovveride the current label's text again
-            label.setText("The new word is: " + generateWord());       
+            label.setText("The new word is: " + generateWord());   
+            Generate.reset();
         }
       }
     }

@@ -18,8 +18,8 @@ public class Coin {
      * @param coin 
      */
     public Coin(int coin) {
-        this.coin = coin;
         this.coin = 10;
+        this.coin = coin;
     }
     
     /**
